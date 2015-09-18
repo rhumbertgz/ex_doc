@@ -26,7 +26,7 @@ defmodule ExDoc.Formatter.HTML do
     protocols  = filter_list(:protocols, all)
 
     if config.logo do
-      config = process_logo_metadata(config)
+      config = process_logo_metadata(config, "#{config.output}/assets")
     end
 
     generate_api_reference(modules, exceptions, protocols, output, config)
@@ -209,8 +209,8 @@ defmodule ExDoc.Formatter.HTML do
     |> Templates.h()
   end
 
-  defp process_logo_metadata(config) do
-    output = "#{config.output}/assets"
+  @spec process_logo_metadata(%ExDoc.Config{}, String.t) :: %ExDoc.Config{}
+  def process_logo_metadata(config, output) do
     File.mkdir_p! output
     file_extname =
       config.logo
